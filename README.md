@@ -1,1 +1,1 @@
-# Projects
+# Snake Game Project
