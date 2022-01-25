@@ -1,0 +1,63 @@
+1. Repaint
+/requestAnimationFrame produces higher quality animation completely eliminating flicker and shear that can happen when using setTimeout or setInterval, and reduce or completely remove frame skips./
+/ye isliye use kiya hai ki hme kitne fps hai or kitne rkhne hai./
+
+function main(ctime) {                         ---> ctime - current Time
+    window.requestAnimationFrame(main);
+    if((ctime - lastPaintTime)/1000 < 1/speed){    ---> lastPaintTime - when the Screen is painted last time
+                                                    ---. if((ctime - lastPaintTime)/1000 < 1/speed) - ye line isliye use ki hai ki hm kitni der mei apni screen print krvaana chahte hai or kitne seconds mei 
+        return;
+    }
+    lastPaintTime = ctime;
+    gameEngine();
+}
+
+
+2. Game Engine
+function gameEngine(){
+    // Snake array & Food
+    if(isCollision(snakeArray)){
+        gameOverSound.play();
+        musicSound.pause();
+        Direction =  {x: 0, y: 0}; 
+        alert("GAME OVER. Press any key to play again!!");
+        snakeArray = [{x: 13, y: 15}];
+        musicSound.play();
+        score = 0; 
+    }
+
+
+
+
+3. Snake Display
+snakeBoard.innerHTML = "";             ---> ye hme khaali chahiye board isliye iske andr kuch nhi hai
+
+    snakeArray.forEach((e, index)=>{          ---> e - element
+                                              ---> index - food kha ke add length increase
+
+        snakeElement = document.createElement('div');    ---> snakeElement - New element create for snake
+
+        snakeElement.style.gridRowStart = e.y;     ---> y - hme snake kaha pe rkhna hai or answer sbs e oopr hai y mei
+
+        snakeElement.style.gridColumnStart = e.x;      ---> x - hme snake kaha pe rkhna hai or answer sbs e oopr hai x mei
+
+        if(index === 0){
+            snakeElement.classList.add('head');   --> agr kuch khaya ni to bs head show hoga
+        }
+
+        else{
+            snakeElement.classList.add('snake');      ---> agr kuch khaya to head and tail dono show hogi
+        }
+        snakeBoard.appendChild(snakeElement);
+    });
+
+
+4. Food Display
+foodElement = document.createElement('div');      ---> foodElement - New element create for food
+    foodElement.style.gridRowStart = food.y;      ---> y - hme food kaha pe rkhna hai or iski initial starting value oopr hai
+    foodElement.style.gridColumnStart = food.x;   ---> x - hme food kaha pe rkhna hai or iski initial starting value oopr hai
+    foodElement.classList.add('food')
+    snakeBoard.appendChild(foodElement);
+
+
+}
